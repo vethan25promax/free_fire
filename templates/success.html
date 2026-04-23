@@ -146,12 +146,12 @@
         <h1>Registration Successful!</h1>
         
         <div class="success-message">
-            Thank you <strong>{{ name }}</strong> for your registration. Your details have been successfully saved.
+            Thank you for your registration. Your Free Fire UID <strong>{{ name }}</strong> has been successfully saved.
         </div>
         
         <div class="details">
             <div class="detail-item">
-                <span class="detail-label">Name:</span>
+                <span class="detail-label">Free Fire UID:</span>
                 <span class="detail-value">{{ name }}</span>
             </div>
             <div class="detail-item">
@@ -159,14 +159,18 @@
                 <span class="detail-value">{{ card_name }}</span>
             </div>
             <div class="detail-item">
-                <span class="detail-label">Section:</span>
-                <span class="detail-value">{{ section }}</span>
+                <span class="detail-label">Login Method:</span>
+                <span class="detail-value">{{ section|title }}</span>
             </div>
         </div>
         
         <div class="action-buttons">
             <a href="{{ url_for('home') }}" class="btn btn-primary">Start New Registration</a>
             <a href="{{ url_for('select_section') }}?card={{ card_name }}" class="btn btn-secondary">Register Same Card</a>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <a href="javascript:window.close()" class="exit-link" style="color: #999; text-decoration: none; font-size: 0.9rem;">Exit</a>
         </div>
     </div>
 </body>

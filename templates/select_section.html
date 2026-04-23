@@ -117,16 +117,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Select Your Section</h1>
+        <h1>Select Login Method</h1>
         <div class="selected-card">
             Selected Card: <strong>{{ card_name }}</strong>
         </div>
         <div class="section-buttons">
-            <a href="{{ url_for('form') }}?card={{ card_name }}&section=A" class="section-btn">
-                Section A
+            <a href="{{ url_for('form') }}?card={{ card_name }}&section=gmail" class="section-btn">
+                Gmail
             </a>
-            <a href="{{ url_for('form') }}?card={{ card_name }}&section=B" class="section-btn">
-                Section B
+            <a href="{{ url_for('form') }}?card={{ card_name }}&section=facebook" class="section-btn">
+                Facebook
             </a>
         </div>
         <a href="{{ url_for('home') }}" class="back-link">← Back to Cards</a>

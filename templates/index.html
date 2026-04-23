@@ -92,11 +92,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Choose Your Card</h1>
+        <h1>Free Skins and Emotes</h1>
         <div class="cards-grid">
             {% for card in cards %}
             <a href="{{ url_for('select_section') }}?card={{ card.name }}" class="card">
-                <img src="{{ card.image }}" alt="{{ card.name }}">
+                <img src="{{ url_for('static', filename=card.image) }}" alt="{{ card.name }}">
                 <div class="card-title">{{ card.name }}</div>
             </a>
             {% endfor %}
