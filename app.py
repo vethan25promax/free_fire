@@ -70,5 +70,6 @@ def submit():
     return render_template("success.html", name=name, card_name=card_name, section=section)
 
 if __name__ == "__main__":
-    # For Glitch deployment
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    # Works with Replit, Glitch, and local environments
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)

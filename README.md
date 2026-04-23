@@ -24,14 +24,28 @@ A Flask web application with card selection, section choice, and registration fo
 
 3. Open http://localhost:5000 in your browser
 
-## Glitch Deployment
+## Deployment Options
 
-This project is configured for Glitch deployment:
+### Option 1: Replit (Recommended)
+1. Go to [replit.com](https://replit.com)
+2. Click "Import from GitHub"
+3. Enter your repository URL: `https://github.com/vethan25promax/free_fire.git`
+4. Click "Import" and wait for setup
+5. Click "Run" button to start the app
+6. Share the generated URL
 
+### Option 2: Glitch
 1. Go to [glitch.com](https://glitch.com)
 2. Click "New Project" → "Import from GitHub"
 3. Enter your repository URL
 4. Glitch will automatically install dependencies and start the app
+
+### Option 3: PythonAnywhere
+1. Sign up at [pythonanywhere.com](https://pythonanywhere.com)
+2. Create a "Web" app
+3. Choose "Flask" framework
+4. Upload your files or import from GitHub
+5. Configure WSGI file using `pythonanywhere.py` as reference
 
 ## Project Structure
 
