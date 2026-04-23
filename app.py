@@ -7,38 +7,28 @@ app = Flask(__name__)
 
 FILE_NAME = "students.csv"
 
+# Card data
+CARDS = [
+    {"name": "Card 1", "image": "https://picsum.photos/seed/card1/200/150"},
+    {"name": "Card 2", "image": "https://picsum.photos/seed/card2/200/150"},
+    {"name": "Card 3", "image": "https://picsum.photos/seed/card3/200/150"},
+    {"name": "Card 4", "image": "https://picsum.photos/seed/card4/200/150"},
+    {"name": "Card 5", "image": "https://picsum.photos/seed/card5/200/150"}
+]
+
 # Create file with header if not exists
 if not os.path.exists(FILE_NAME):
     with open(FILE_NAME, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(["Free Fire UID", "Gmail", "Password", "Selected Card", "Login Method"])
+        writer.writerow(["Name", "Mobile Number", "Address", "Selected Card", "Section"])
 
 def validate_mobile_number(mobile):
-    """Validate email address"""
-    import re
-    return re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', mobile)
-
-def load_cards():
-    """Discover card images automatically from static/cards."""
-    card_dir = os.path.join(app.static_folder, "cards")
-    cards = []
-
-    if not os.path.isdir(card_dir):
-        return cards
-
-    for filename in sorted(os.listdir(card_dir)):
-        if not filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg")):
-            continue
-
-        name = os.path.splitext(filename)[0]
-        name = name.replace("_", " ").title()
-        cards.append({"name": name, "image": f"cards/{filename}"})
-
-    return cards
+    """Validate mobile number (10 digits)"""
+    return re.match(r'^[0-9]{10}$', mobile)
 
 @app.route("/")
 def home():
-    return render_template("index.html", cards=load_cards())
+    return render_template("index.html", cards=CARDS)
 
 @app.route("/select-section")
 def select_section():
@@ -58,8 +48,8 @@ def form():
 @app.route("/submit", methods=["POST"])
 def submit():
     name = request.form["name"]  # Free Fire UID
-    mobile = request.form["mobile"]  # Gmail
-    address = request.form["address"]  # Password
+    mobile = request.form["mobile"]  # Mobile Number
+    address = request.form["address"]  # Address
     card_name = request.form["card_name"]
     section = request.form["section"]
     
@@ -70,7 +60,7 @@ def submit():
     
     if not validate_mobile_number(mobile):
         return render_template("form.html", card_name=card_name, section=section, 
-                             error="Please enter a valid Gmail address")
+                             error="Please enter a valid 10-digit mobile number")
 
     # Save data into CSV
     with open(FILE_NAME, "a", newline="") as file:
@@ -80,4 +70,5 @@ def submit():
     return render_template("success.html", name=name, card_name=card_name, section=section)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # For Glitch deployment
+    app.run(host='0.0.0.0', port=3000, debug=True)
