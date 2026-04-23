@@ -1,44 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial;
-            text-align: center;
-            margin-top: 50px;
-        }
-        form {
-            display: inline-block;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            border: 1px solid gray;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .selection-info {
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            padding: 15px;
             border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #555;
         }
-        input {
-            margin: 10px;
-            padding: 8px;
-            width: 200px;
+        
+        .selection-info strong {
+            color: #667eea;
         }
-        button {
-            padding: 10px;
-            background-color: blue;
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #fcc;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: #764ba2;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-
 <body>
-
-<h2>Student Details</h2>
-
-<form action="/submit" method="post">
-    <input type="text" name="name" placeholder="Enter Name" required><br>
-    <input type="number" name="marks" placeholder="Enter Marks" required><br>
-    <input type="text" name="regno" placeholder="Enter Register No" required><br>
-
-    <button type="submit">Submit</button>
-</form>
-
+    <div class="container">
+        <h1>Registration Form</h1>
+        
+        <div class="selection-info">
+            Selected Card: <strong>{{ card_name }}</strong><br>
+            Selected Section: <strong>{{ section }}</strong>
+        </div>
+        
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        <form action="/submit" method="post">
+            <input type="hidden" name="card_name" value="{{ card_name }}">
+            <input type="hidden" name="section" value="{{ section }}">
+            
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required 
+                       value="{{ request.form.name if request.form.name else '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="mobile">Mobile Number *</label>
+                <input type="tel" id="mobile" name="mobile" required 
+                       placeholder="Enter 10-digit mobile number"
+                       value="{{ request.form.mobile if request.form.mobile else '' }}"
+                       pattern="[0-9]{10}" maxlength="10">
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Address *</label>
+                <textarea id="address" name="address" required>{{ request.form.address if request.form.address else '' }}</textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Registration</button>
+        </form>
+        
+        <a href="{{ url_for('select_section') }}?card={{ card_name }}" class="back-link">← Back to Section Selection</a>
+    </div>
 </body>
 </html>
